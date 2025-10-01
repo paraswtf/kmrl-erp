@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { db } from "@/server/db";
 import { env } from "@/env";
-import { documentNameToCode } from "@/lib/utils";
+import { documentNameToCode, departmentNameToCode } from "@/lib/utils";
 
 cloudinary.config({
 	cloud_name: env.CLOUDINARY_CLOUD_NAME,
@@ -44,7 +44,7 @@ export async function saveMultipleFiles(
 		data.map(async (file) => {
 			const fileName = file.documentId.split("/").pop();
 			const departmentName = documentNameToCode[file.department];
-			const docTypeName = documentNameToCode[file.documentType];
+			const docTypeName = departmentNameToCode[file.documentType];
 			const newPublicId = `${departmentName}/${docTypeName}/${fileName}`;
 			const upload = await cloudinary.uploader.rename(
 				file.documentId,

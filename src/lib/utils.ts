@@ -21,6 +21,14 @@ export enum DocumentType {
 	AUD = "Compliance Audit",
 	RAS = "Risk Assessment",
 	WIN = "Work Instruction",
+	COR = "Correspondence",
+	REP = "Report",
+	FOR = "Form",
+	NOT = "Notice",
+	AGD = "Agenda",
+	MIN = "Minutes",
+	PRO = "Proposal",
+	CON = "Contract",
 }
 
 export enum Department {
@@ -38,8 +46,16 @@ export enum Department {
 	CR = "Customer Relations",
 	PRC = "Procurement Department",
 	LEG = "Legal & Compliance",
+	MED = "Medical Department",
+	ENV = "Environment Department",
+	QC = "Quality Control",
+	ADM = "Administration",
 }
 
 export const documentNameToCode = Object.fromEntries(
 	Object.entries(DocumentType).map(([code, name]) => [name, code]),
 ) as Record<DocumentType, keyof typeof DocumentType>;
+
+export const departmentNameToCode = Object.fromEntries(
+	Object.entries(Department).map(([code, name]) => [name, code]),
+) as Record<Department, keyof typeof Department>;

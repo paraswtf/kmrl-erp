@@ -54,6 +54,7 @@ import {
 import Link from "next/link";
 import React from "react";
 import { useDebounce } from "@/components/ui/fancy-multi-select";
+import { LinkPreview } from "@/components/ui/link-preview";
 
 export function DocumentsTable() {
 	const [searchQuery, setSearchQuery] = React.useState("");
@@ -116,6 +117,7 @@ export function DocumentsTable() {
 								<TableHead>Department</TableHead>
 								<TableHead>Summary</TableHead>
 								<TableHead className="text-right"></TableHead>
+								<TableHead className="text-right"></TableHead>
 							</TableRow>
 						</TableHeader>
 						<TableBody>
@@ -124,7 +126,25 @@ export function DocumentsTable() {
 									<TableRow key={i}>
 										<TableCell>{doc.docType}</TableCell>
 										<TableCell>{doc.department}</TableCell>
-										<TableCell>{doc.summary}</TableCell>
+										<TableCell className="whitespace-pre">
+											{doc.summary}
+										</TableCell>
+										<TableCell className="whitespace-pre">
+											<LinkPreview
+												url={doc.cloudinaryUrl}
+												className="font-medium underline"
+												isStatic
+												imageSrc={
+													doc.cloudinaryUrl
+														.replace("/upload/", "/upload/w_400/pg_1/")
+														.split(".")
+														.slice(0, -1)
+														.join(".") + ".jpg"
+												}
+											>
+												View file
+											</LinkPreview>
+										</TableCell>
 										<TableCell className="text-right">
 											<Button variant="ghost" size="sm">
 												<IconEdit className="size-4" />

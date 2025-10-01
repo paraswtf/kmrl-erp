@@ -151,6 +151,18 @@ export const documentRouter = {
 									mode: "insensitive",
 								},
 							},
+							{
+								docType: {
+									contains: input.query,
+									mode: "insensitive",
+								},
+							},
+							{
+								department: {
+									contains: input.query,
+									mode: "insensitive",
+								},
+							},
 						],
 					},
 				});

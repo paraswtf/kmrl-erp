@@ -6,6 +6,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconTrash } from "@tabler/icons-react";
 import { FilePlus2 } from "lucide-react";
+import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -130,7 +131,15 @@ export function DocumentsUploadTable() {
 	const [uploading, setUploading] = useState<Record<string, boolean>>({});
 
 	const uploadMutation = api.document.upload.useMutation();
-	const bulkSave = api.document.bulkSave.useMutation();
+	const bulkSave = api.document.bulkSave.useMutation({
+		onSuccess: () => {
+			toast({
+				title: "Saved successfully",
+				description: `All Documents saved successfully`,
+			});
+			redirect("/dashboard/documents");
+		},
+	});
 	const utils = api.useUtils();
 
 	// file input refs per row so we can trigger click programmatically
@@ -185,8 +194,12 @@ export function DocumentsUploadTable() {
 					// );
 					const mappedDocType =
 						DocumentType[aiData.doc_type as keyof typeof DocumentType];
-					const mappedDept = mapToEnumValue(Department as any, aiData.org_type);
-					const mappedSummary = aiData.shortSummary ?? aiData.summary ?? "";
+					const mappedDept =
+						Department[aiData.org_type as keyof typeof Department];
+					const mappedSummary =
+						aiData.shortSummary +
+							"\n" +
+							aiData.summary.map((s) => "- " + s).join("\n") || "";
 
 					console.log(
 						"AI data mapped",
